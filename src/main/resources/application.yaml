@@ -1,0 +1,20 @@
+quarkus:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/example
+    driver: org.postgresql.Driver
+    username: example
+    password: example
+    transactions: enabled
+    min-size: 3
+    max-size: 13
+  hibernate-orm:
+    dialect: org.hibernate.dialect.PostgreSQL10Dialect
+    database:
+      generation: none
+  flyway:
+    migrate-at-start: true
+    clean-at-start: false
+    locations: classpath:db/migration
+    connect-retries: 0
+    baseline-on-migrate: true
+
