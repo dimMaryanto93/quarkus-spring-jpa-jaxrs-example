@@ -1,11 +1,7 @@
 package com.maryanto.dimas.example.repository;
 
 import com.maryanto.dimas.example.entity.ExampleTable;
-import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-import javax.enterprise.context.ApplicationScoped;
-
-@ApplicationScoped
-public class ExampleTableRepository implements PanacheRepositoryBase<ExampleTable, String> {
-
+public interface ExampleTableRepository extends PagingAndSortingRepository<ExampleTable, String> {
 }

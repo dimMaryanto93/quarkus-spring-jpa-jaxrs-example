@@ -18,5 +18,4 @@ public class ExampleTableMappers {
         ExampleUpdateMapper converter = Mappers.getMapper(ExampleUpdateMapper.class);
     }
 
-
 }
