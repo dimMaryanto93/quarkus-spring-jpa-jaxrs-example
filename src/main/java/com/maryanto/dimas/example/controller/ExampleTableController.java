@@ -8,7 +8,6 @@ import com.maryanto.dimas.plugins.web.commons.ui.datatables.DataTablesRequest;
 import com.maryanto.dimas.plugins.web.commons.ui.datatables.DataTablesResponse;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -63,22 +62,16 @@ public class ExampleTableController {
     @Path("/datatables")
     @Consumes({MediaType.APPLICATION_JSON})
     public DataTablesResponse<ExampleTable> datatables(
-            @QueryParam(value = "draw") Long draw,
-            @QueryParam(value = "start") Long start,
-            @QueryParam(value = "length") Long length,
-            @QueryParam(value = "order[0][column]") Long iSortCol0,
-            @QueryParam(value = "order[0][dir]") String sSortDir0,
+            @DefaultValue("0") @QueryParam(value = "draw") Long draw,
+            @DefaultValue("0") @QueryParam(value = "start") Long start,
+            @DefaultValue("10") @QueryParam(value = "length") Long length,
+            @DefaultValue("0") @QueryParam(value = "order[0][column]") Long iSortCol0,
+            @DefaultValue("asc") @QueryParam(value = "order[0][dir]") String sSortDir0,
             ExampleTable params) {
         if (params == null) params = new ExampleTable();
         log.info("draw: {}, start: {}, length: {}, orderBy: {}, orderDir: {},  type: {}", draw, start, length, iSortCol0, sSortDir0, params);
         return service.datatables(
-                new DataTablesRequest<>(
-                        draw != null ? draw : 0l,
-                        length != null ? length : 10l,
-                        start != null ? start : 0,
-                        StringUtils.isNotBlank(sSortDir0) ? sSortDir0 : "asc",
-                        iSortCol0 != null ? iSortCol0 : 0l,
-                        params)
+                new DataTablesRequest<>(draw, length, start, sSortDir0, iSortCol0, params)
         );
     }
 
