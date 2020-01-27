@@ -11,6 +11,8 @@ quarkus:
     transactions: enabled
     min-size: 3
     max-size: 13
+    health:
+      enabled: true
   hibernate-orm:
     dialect: org.hibernate.dialect.PostgreSQL10Dialect
     database:
@@ -21,3 +23,4 @@ quarkus:
     locations: classpath:db/migration
     connect-retries: 0
     baseline-on-migrate: true
+

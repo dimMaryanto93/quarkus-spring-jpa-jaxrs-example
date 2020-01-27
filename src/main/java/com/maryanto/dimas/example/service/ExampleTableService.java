@@ -5,40 +5,26 @@ import com.maryanto.dimas.example.entity.ExampleTable;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.transaction.*;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
+@Transactional(Transactional.TxType.SUPPORTS)
 public class ExampleTableService {
 
     @Inject
-    private UserTransaction transaction;
-    @Inject
     private ExampleTableDao dao;
 
-    public Optional<ExampleTable> findById(String id){
+    public Optional<ExampleTable> findById(String id) {
         return this.dao.findById(id);
     }
 
-    public ExampleTable save(ExampleTable value) throws SystemException, NotSupportedException {
-        try {
-            transaction.begin();
-            value = dao.save(value);
-            transaction.commit();
-            return value;
-        } catch (RollbackException | HeuristicMixedException | HeuristicRollbackException e) {
-            e.printStackTrace();
-            transaction.rollback();
-            return null;
-        }
+    @Transactional(Transactional.TxType.REQUIRED)
+    public ExampleTable save(ExampleTable value) {
+        value = dao.save(value);
+        return value;
     }
-
-//    public ExampleTable update(ExampleTable value) throws SystemException, NotSupportedException {
-//        transaction.begin();
-//
-//        return null;
-//    }
 
     public List<ExampleTable> findAll() {
         return dao.list();

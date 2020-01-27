@@ -6,12 +6,12 @@ import com.maryanto.dimas.example.mapper.ExampleTableMappers;
 import com.maryanto.dimas.example.service.ExampleTableService;
 
 import javax.inject.Inject;
-import javax.transaction.NotSupportedException;
-import javax.transaction.SystemException;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -44,11 +44,9 @@ public class ExampleTableController {
     @Consumes({MediaType.APPLICATION_JSON})
     public Response save(@Valid ExampleTableDto.New dto) {
         ExampleTable value = ExampleTableMappers.ExampleNewMapper.converter.convertToEntity(dto);
-        try {
-            value = this.service.save(value);
-            return Response.ok(value).build();
-        } catch (SystemException | NotSupportedException e) {
-            return Response.serverError().build();
-        }
+        value.setCreatedDate(LocalDate.now());
+        value.setCreatedTime(LocalDateTime.now());
+        value = this.service.save(value);
+        return Response.ok(value).build();
     }
 }
