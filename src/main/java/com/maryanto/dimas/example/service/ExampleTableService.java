@@ -7,6 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.*;
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class ExampleTableService {
@@ -15,6 +16,10 @@ public class ExampleTableService {
     private UserTransaction transaction;
     @Inject
     private ExampleTableDao dao;
+
+    public Optional<ExampleTable> findById(String id){
+        return this.dao.findById(id);
+    }
 
     public ExampleTable save(ExampleTable value) throws SystemException, NotSupportedException {
         try {
@@ -29,7 +34,14 @@ public class ExampleTableService {
         }
     }
 
-    public List<ExampleTable> findAll(){
+//    public ExampleTable update(ExampleTable value) throws SystemException, NotSupportedException {
+//        transaction.begin();
+//
+//        return null;
+//    }
+
+    public List<ExampleTable> findAll() {
         return dao.list();
     }
+
 }

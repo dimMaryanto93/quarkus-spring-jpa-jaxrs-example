@@ -13,5 +13,10 @@ public class ExampleTableMappers {
         ExampleNewMapper converter = Mappers.getMapper(ExampleNewMapper.class);
     }
 
+    @Mapper
+    public interface ExampleUpdateMapper extends ObjectMapper<ExampleTable, ExampleTableDto.Update> {
+        ExampleUpdateMapper converter = Mappers.getMapper(ExampleUpdateMapper.class);
+    }
+
 
 }
