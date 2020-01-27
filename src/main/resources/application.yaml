@@ -1,4 +1,8 @@
 quarkus:
+  resteasy:
+    gzip:
+      enabled: true
+      max-input: 10M
   datasource:
     url: jdbc:postgresql://localhost:5432/example
     driver: org.postgresql.Driver
@@ -17,4 +21,3 @@ quarkus:
     locations: classpath:db/migration
     connect-retries: 0
     baseline-on-migrate: true
-
